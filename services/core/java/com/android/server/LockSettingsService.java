@@ -675,18 +675,6 @@ public class LockSettingsService extends ILockSettings.Stub {
                         Slog.e(TAG, "Invalid tied profile lock type: " + quality);
                     }
                 }
-                try {
-                    final String alias = LockPatternUtils.PROFILE_KEY_NAME_ENCRYPT + userInfo.id;
-                    java.security.KeyStore keyStore =
-                            java.security.KeyStore.getInstance("AndroidKeyStore");
-                    keyStore.load(null);
-                    if (keyStore.containsAlias(alias)) {
-                        keyStore.deleteEntry(alias);
-                    }
-                } catch (KeyStoreException | NoSuchAlgorithmException |
-                        CertificateException | IOException e) {
-                    Slog.e(TAG, "Unable to remove tied profile key", e);
-                }
             }
 
             boolean isWatch = mContext.getPackageManager().hasSystemFeature(
